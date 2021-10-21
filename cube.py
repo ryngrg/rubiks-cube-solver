@@ -1,3 +1,6 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
 class cube():
     adjacent = {'r': ('w', 'b', 'y', 'g'),
                 'b': ('w', 'o', 'y', 'r'),
@@ -32,7 +35,7 @@ class cube():
     
     def turn_face(self, face, clockwise):
         if clockwise:
-            self.faces[face] = [self.faces[face][-1]] + self.faces[face][:-1]
+            self.faces[face] = self.faces[face][-2:] + self.faces[face][:-2]
             prev_face = self.adjacent[face][-1]
             idx_list = self.get_adj_idx(prev_face, face)
             temp_row = [self.faces[prev_face][x] for x in idx_list]
@@ -43,7 +46,7 @@ class cube():
                     self.faces[curr_face][idx_list[x]] = temp_row[x]
                 temp_row = curr_row.copy()
         else:
-            #self.faces[face] = self.faces[face][1:] + [self.faces[face][0]]
+            #self.faces[face] = self.faces[face][2:] + self.faces[face][0:2]
             for i in range(3):
                 self.turn_face(face, True)
             
