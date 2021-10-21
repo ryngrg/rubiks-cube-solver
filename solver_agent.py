@@ -16,4 +16,5 @@ def greedy_action(state):
                 best_action = (face, clockwise)
     return best_action                
 
-def get_q(state, action)
+def get_q(state, action):
+    pass
