@@ -49,7 +49,15 @@ class cube():
             #self.faces[face] = self.faces[face][2:] + self.faces[face][0:2]
             for i in range(3):
                 self.turn_face(face, True)
-            
+
+    def state_reward(self):
+        num = 0
+        for key, face in self.faces.items():
+            num += face.count(key)
+        if num == 48:
+            num += 100
+        return 5 * num
+    
     def display(self):
         print(self.faces)
 
