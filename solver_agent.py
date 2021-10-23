@@ -1,33 +1,46 @@
-from cube import cube
+from cube import Cube
 import random
+import keras
+import numpy as np
 
-class agent():
-    q_network = network()
+
+def random_action():
+    face = random.choice(['r', 'b', 'w', 'g', 'o', 'y'])
+    clockwise = random.choice([True, False])
+    return face, clockwise
+
+
+class Network:
+    def __init__(self):
+        self.model = keras.model.Sequential()
+        self.model.add(keras.layers.Dense())
+
+    def state_to_input(self, state):
+        pass
+
+    def get_q(self, state):
+        inputs = self.state_to_input(state)
+        return self.model(inputs)
+
+
+class Agent:
+    q_network = Network()
     
-    def __init__(self, epsilon = 0.01, train = True):
+    def __init__(self, epsilon=0.01, train=True):
         self.train = train
         self.epsilon = epsilon
-    
-    def random_action(self):
-        face = random.choice(['r', 'b', 'w', 'g', 'o', 'y'])
-        clockwise = random.choice([True, False])
-        return (face, clockwise)
-
-    def greedy_action(self, state):
-        best_q = None
+        self.actions = []
         for face in ['r', 'b', 'w', 'g', 'o', 'y']:
             for clockwise in [True, False]:
-                q = get_q(state, (face, clockwise))
-                if (best_q is None) or (q > best_q):
-                    best_q = q
-                    best_action = (face, clockwise)
-        return best_action
+                self.actions.append((face, clockwise))
+        self.actions = tuple(self.actions)
+
+    def greedy_action(self, state):
+        q = self.q_network.get_q(state)
+        return self.actions[np.argmax(q)]
 
     def pick_action(self, state):
-        if not(self.train) or (random.uniform(0, 1) > self.epsilon):
-            return greedy_action(state)
+        if not self.train or (random.uniform(0, 1) > self.epsilon):
+            return self.greedy_action(state)
         else:
             return random_action()
-
-class network():
-    pass

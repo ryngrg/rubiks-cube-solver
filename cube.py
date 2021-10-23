@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-class cube():
+
+class Cube:
     adjacent = {'r': ('w', 'b', 'y', 'g'),
                 'b': ('w', 'o', 'y', 'r'),
                 'w': ('r', 'g', 'o', 'b'),
@@ -12,7 +13,7 @@ class cube():
     faces = {}
     
     def __init__(self, init_state=None):
-        if init_state != None:
+        if init_state is not None:
             for c in init_state.keys():
                 self.faces[c] = init_state[c]
         else:
@@ -46,7 +47,7 @@ class cube():
                     self.faces[curr_face][idx_list[x]] = temp_row[x]
                 temp_row = curr_row.copy()
         else:
-            #self.faces[face] = self.faces[face][2:] + self.faces[face][0:2]
+            # self.faces[face] = self.faces[face][2:] + self.faces[face][0:2]
             for i in range(3):
                 self.turn_face(face, True)
 
@@ -61,12 +62,13 @@ class cube():
     def display(self):
         print(self.faces)
 
+
 if __name__ == "__main__":
-    cube1 = cube()
+    cube1 = Cube()
     print("initial state:")
     cube1.display()
     cube1.turn_face('r', False)
     cube1.turn_face('w', True)
-    cube2 = cube(cube1.get_state())
+    cube2 = Cube(cube1.get_state())
     print("\nfinal state copied to new cube")
     cube2.display()
