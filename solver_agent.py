@@ -88,7 +88,7 @@ class Agent:
             cube.turn_face(self.actions[a][0], self.actions[a][1])
             turns += 1
             print("Turn", turns, ":", self.actions[a])
-        return cube.is_solved()
+        return cube.is_solved(), turns
 
     def greedy_action(self, state):
         q = self.q_network.get_q(state, self.train)

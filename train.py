@@ -28,12 +28,12 @@ def train_main(agent):
 def test_main(model_name, num_moves):
     agent = Agent(model=model_name)
     rc = get_shuffled_cube(num_moves)
-    return agent.perform(rc, 40)
+    successful, moves = agent.perform(rc, 40)
+    print("Successful:", successful)
+    print("Solved in moves:", moves)
 
 
 if __name__ == "__main__":
     agent = Agent()
     train_main(agent)
-    successful, moves = test_main("trainedModel_20_moves", 15)
-    print("Successful:", successful)
-    print("Solved in moves:", moves)
+    test_main("trainedModel_20_moves", 15)
