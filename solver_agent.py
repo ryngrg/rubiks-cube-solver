@@ -1,4 +1,3 @@
-from cube import Cube
 import random
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
@@ -101,5 +100,5 @@ class Agent:
         else:
             return random.randint(0, len(self.actions)-1)
 
-    def save_model(self):
-        self.q_network.model.save(r"./models/trained_model")
+    def save_model(self, name):
+        self.q_network.model.save(r"./models/" + name)

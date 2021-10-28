@@ -1,7 +1,12 @@
 from cube import Cube
 import random
 from solver_agent import Agent
-from solver_agent import state_to_input
+
+
+def random_action():
+    face = random.choice(('r', 'b', 'w', 'g', 'o', 'y'))
+    clockwise = random.choice((True, False))
+    return face, clockwise
 
 
 def get_shuffled_cube(num_moves):
@@ -12,16 +17,23 @@ def get_shuffled_cube(num_moves):
     return shuffled_cube
 
 
-def random_action():
-    face = random.choice(('r', 'b', 'w', 'g', 'o', 'y'))
-    clockwise = random.choice((True, False))
-    return face, clockwise
+def train_main(agent):
+    for moves in range(1, 21):
+        for i in range(5):
+            cube = get_shuffled_cube(moves)
+            agent.learn(cube, 3, 40)
+        agent.save_model("trainedModel_" + str(moves) + "_moves")
+
+
+def test_main(model_name, num_moves):
+    agent = Agent(model=model_name)
+    rc = get_shuffled_cube(num_moves)
+    return agent.perform(rc, 40)
 
 
 if __name__ == "__main__":
-    rc = get_shuffled_cube(10)
-    rc.display()
     agent = Agent()
-    inputs = state_to_input(rc.get_state())
-    print(inputs.shape)
-    print(inputs)
+    train_main(agent)
+    successful, moves = test_main("trainedModel_20_moves", 15)
+    print("Successful:", successful)
+    print("Solved in moves:", moves)
