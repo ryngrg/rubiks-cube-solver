@@ -73,8 +73,8 @@ class Agent:
                 a = self.pick_action(state, epsilon)
                 cube.turn_face(self.actions[a][0], self.actions[a][1])
                 N[0][a] += 1
-                q_eval = q + (cube.state_reward() - q) / N
-                self.q_network.update_weights(state, q_eval)
+                q_new = q + (cube.state_reward() - q) / N
+                self.q_network.update_weights(state, q_new)
                 if cube.is_solved():
                     break
                 epsilon *= self.eps_time_decay
@@ -89,6 +89,7 @@ class Agent:
             cube.turn_face(self.actions[a][0], self.actions[a][1])
             turns += 1
             print("Turn", turns, ":", self.actions[a])
+        return cube.is_solved()
 
     def greedy_action(self, state):
         q = self.q_network.get_q(state, self.train)
