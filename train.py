@@ -17,7 +17,8 @@ def get_shuffled_cube(num_moves):
     return shuffled_cube
 
 
-def train_main(agent):
+def train_main(model_name=None):
+    agent = Agent(model=model_name)
     for moves in range(1, 21):
         for i in range(5):
             cube = get_shuffled_cube(moves)
@@ -34,6 +35,5 @@ def test_main(model_name, num_moves):
 
 
 if __name__ == "__main__":
-    agent = Agent()
-    train_main(agent)
+    train_main()
     test_main("trainedModel_20_moves", 15)
