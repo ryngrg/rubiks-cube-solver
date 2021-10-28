@@ -14,8 +14,7 @@ class Cube:
     
     def __init__(self, init_state=None):
         if init_state is not None:
-            for c in init_state.keys():
-                self.faces[c] = init_state[c]
+            self.set_state(init_state)
         else:
             self.faces['r'] = ['r'] * 8
             self.faces['b'] = ['b'] * 8
@@ -23,6 +22,10 @@ class Cube:
             self.faces['g'] = ['g'] * 8
             self.faces['o'] = ['o'] * 8
             self.faces['y'] = ['y'] * 8
+
+    def set_state(self, state):
+        for c in state.keys():
+            self.faces[c] = state[c]
         
     def get_state(self):
         return self.faces
@@ -58,6 +61,21 @@ class Cube:
         if num == 48:
             num += 100
         return 5 * num
+
+    def is_solved(self):
+        if self.faces['r'] != ['r'] * 8:
+            return False
+        if self.faces['b'] != ['b'] * 8:
+            return False
+        if self.faces['w'] != ['w'] * 8:
+            return False
+        if self.faces['g'] != ['g'] * 8:
+            return False
+        if self.faces['o'] != ['o'] * 8:
+            return False
+        if self.faces['y'] != ['y'] * 8:
+            return False
+        return True
     
     def display(self):
         print(self.faces)
