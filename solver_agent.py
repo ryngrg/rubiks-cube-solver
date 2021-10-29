@@ -80,14 +80,18 @@ class Agent:
             cube.set_state(og_state)
             first_epsilon *= self.eps_episode_decay
 
-    def perform(self, cube, max_turns):
+    def perform(self, cube, max_turns, render=False):
         self.train = False
         turns = 0
+        if render:
+            cube.display()
         while (turns < max_turns) and not(cube.is_solved()):
             a = self.pick_action(cube.get_state())
             cube.turn_face(self.actions[a][0], self.actions[a][1])
             turns += 1
             print("Turn", turns, ":", self.actions[a])
+            if render:
+                cube.display()
         return cube.is_solved(), turns
 
     def greedy_action(self, state):
